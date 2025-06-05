@@ -2,10 +2,38 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Test</title>
+    <title>Uitgebreide Testpagina</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; }
+        header { background: #0078d7; color: #fff; padding: 20px 0; text-align: center; }
+        main { background: #fff; padding: 20px; border-radius: 8px; max-width: 700px; margin: 30px auto; }
+        footer { text-align: center; color: #888; margin-top: 40px; }
+    </style>
 </head>
 <body>
-    <h1>Welkom!</h1>
-    <p>Dit is een eenvoudige webpagina.</p>
+    <header>
+        <h1>Welkom op mijn webpagina!</h1>
+    </header>
+    <main>
+        <h2>Over deze pagina</h2>
+        <p>Dit is een eenvoudige, maar iets uitgebreidere webpagina als voorbeeld.</p>
+        <ul>
+            <li>HTML5 structuur</li>
+            <li>Basis CSS-styling</li>
+            <li>Responsief ontwerp</li>
+        </ul>
+        <h2>Contact</h2>
+        <form>
+            <label for="naam">Naam:</label><br>
+            <input type="text" id="naam" name="naam"><br><br>
+            <label for="bericht">Bericht:</label><br>
+            <textarea id="bericht" name="bericht" rows="4" cols="40"></textarea><br><br>
+            <button type="submit">Verstuur</button>
+        </form>
+    </main>
+    <footer>
+        &copy; 2024 Mijn Webpagina
+    </footer>
 </body>
 </html>
