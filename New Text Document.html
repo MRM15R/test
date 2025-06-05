@@ -5,83 +5,129 @@
     <title>High-Tech Webpage + Game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
         body {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #fff 0%, #ebf8ff 100%);
+            min-height: 100vh; background: linear-gradient(135deg, #fff 0%, #ebf8ff 100%);
             overflow-x: hidden; transition: background 0.4s;
         }
-        header, main, footer { max-width: 1200px; margin: auto; padding: 1rem; }
-        header h1 { font-size: 2.5rem; text-align: center; margin-bottom: 1rem; }
+        header, main, footer {
+            max-width: 1200px; margin: auto; padding: 1rem;
+        }
+        header h1 {
+            font-size: 2.5rem; text-align: center; margin-bottom: 1rem;
+        }
         main {
-            background: rgba(255,255,255,0.95);
-            padding: 2rem; margin-bottom: 2rem; border-radius: 8px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            background: rgba(255,255,255,0.95); padding: 2rem; margin-bottom: 2rem;
+            border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.1);
             transition: box-shadow 0.4s;
         }
-        main:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.15); }
-        h2 { margin-bottom: 1rem; font-size: 1.8rem; color: #0078d7; position: relative; display: inline-block; }
+        main:hover {
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+        }
+        h2 {
+            margin-bottom: 1rem; font-size: 1.8rem; color: #0078d7;
+            position: relative; display: inline-block;
+        }
         h2::after {
             content: ""; width: 60%; height: 3px; background: #0078d7;
             position: absolute; left: 0; bottom: -6px;
         }
         ul { margin: 1rem 0; list-style: none; }
-        li { margin-bottom: 0.5rem; padding: 0.5rem 0; }
-        .tooltip { position: relative; cursor: pointer; display: inline-block; background: #f1f9ff; border-radius: 4px; padding: 0.3rem 0.5rem; transition: background 0.2s; }
-        .tooltip:hover { background: #dceefa; }
+        li {
+            margin-bottom: 0.5rem; padding: 0.5rem 0;
+        }
+        .tooltip {
+            position: relative; cursor: pointer; display: inline-block;
+            background: #f1f9ff; border-radius: 4px; padding: 0.3rem 0.5rem;
+            transition: background 0.2s;
+        }
+        .tooltip:hover {
+            background: #dceefa;
+        }
         .tooltiptext {
-            visibility: hidden; width: 180px; background: #0078d7; color: #fff; text-align: center;
-            border-radius: 8px; padding: 0.5rem; position: absolute; z-index: 999;
-            bottom: 125%; left: 50%; margin-left: -90px; opacity: 0;
+            visibility: hidden; width: 180px; background: #0078d7; color: #fff;
+            text-align: center; border-radius: 8px; padding: 0.5rem;
+            position: absolute; z-index: 999; bottom: 125%; left: 50%;
+            margin-left: -90px; opacity: 0;
             transition: opacity 0.2s, visibility 0.2s; font-size: 0.9rem;
         }
-        .tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
+        .tooltip:hover .tooltiptext {
+            visibility: visible; opacity: 1;
+        }
         form {
             background: #fff; padding: 1.5rem; margin-top: 1rem;
             border: 2px solid #f0f0f0; border-radius: 6px;
         }
-        .floating-label { position: relative; margin-bottom: 1.5rem; }
+        .floating-label {
+            position: relative; margin-bottom: 1.5rem;
+        }
         input, textarea {
             width: 100%; border: 1px solid #ccc; border-radius: 4px;
             padding: 0.8rem; font-size: 1rem; outline: none;
             transition: border-color 0.2s;
         }
-        input:focus, textarea:focus { border-color: #0078d7; }
+        input:focus, textarea:focus {
+            border-color: #0078d7;
+        }
         label {
             position: absolute; top: 0.8rem; left: 0.8rem; color: #777;
             cursor: text; transition: 0.2s; background: #fff; padding: 0 0.3rem;
         }
-        input:not(:placeholder-shown) + label, textarea.has-value + label {
-            transform: translateY(-1.6rem);
-            font-size: 0.8rem; color: #0078d7;
+        input:not(:placeholder-shown) + label,
+        textarea.has-value + label {
+            transform: translateY(-1.6rem); font-size: 0.8rem; color: #0078d7;
         }
         button[type="submit"] {
             background: linear-gradient(90deg, #0078d7 60%, #00bcf2 100%);
             color: #fff; cursor: pointer; padding: 1rem 1.5rem; border: none;
             border-radius: 6px; font-size: 1rem; transition: background 0.3s;
         }
-        button[type="submit"]:hover { background: linear-gradient(90deg, #00a4d7 60%, #009ed2 100%); }
-        footer { text-align: center; padding: 1rem 0; color: #666; }
+        button[type="submit"]:hover {
+            background: linear-gradient(90deg, #00a4d7 60%, #009ed2 100%);
+        }
+        footer {
+            text-align: center; padding: 1rem 0; color: #666;
+        }
         .bubble {
             position: fixed; border-radius: 50%; opacity: 0.2; z-index: -1;
             animation: float 15s infinite ease-in-out;
         }
-        .bubble1 { width: 300px; height: 300px; background: #0078d7; top: 20%; left: 10%; }
-        .bubble2 { width: 200px; height: 200px; background: #e81123; top: 60%; left: 80%; animation-duration: 18s; }
-        .bubble3 { width: 250px; height: 250px; background: #ffb900; top: 40%; left: 50%; animation-duration: 14s; }
-        .bubble4 { width: 100px; height: 100px; background: #107c10; top: 75%; left: 15%; animation-duration: 20s; }
+        .bubble1 {
+            width: 300px; height: 300px; background: #0078d7; top: 20%; left: 10%;
+        }
+        .bubble2 {
+            width: 200px; height: 200px; background: #e81123; top: 60%; left: 80%;
+            animation-duration: 18s;
+        }
+        .bubble3 {
+            width: 250px; height: 250px; background: #ffb900; top: 40%; left: 50%;
+            animation-duration: 14s;
+        }
+        .bubble4 {
+            width: 100px; height: 100px; background: #107c10; top: 75%; left: 15%;
+            animation-duration: 20s;
+        }
         @keyframes float {
             0% { transform: translateY(0) translateX(0); }
             50% { transform: translateY(-40px) translateX(20px); }
             100% { transform: translateY(0) translateX(0); }
         }
-        .firework { position: fixed; pointer-events: none; z-index: 2000; }
+        .firework {
+            position: fixed; pointer-events: none; z-index: 2000;
+        }
         .firework-dot {
             position: absolute; border-radius: 50%; width: 8px; height: 8px;
             opacity: 0.85;
         }
-        canvas.confetti { pointer-events: none; position: fixed; top: 0; left: 0; z-index: 1000; }
-        .shake { animation: shakeAnim 0.4s; }
+        canvas.confetti {
+            pointer-events: none; position: fixed; top: 0; left: 0; z-index: 1000;
+        }
+        .shake {
+            animation: shakeAnim 0.4s;
+        }
         @keyframes shakeAnim {
             0% { transform: translateX(0); }
             20% { transform: translateX(-8px); }
@@ -93,33 +139,49 @@
         .theme-toggle {
             position: fixed; top: 18px; right: 24px; z-index: 100;
             background: #fff; color: #0078d7; border: 2px solid #0078d7;
-            border-radius: 50%; width: 44px; height: 44px;
-            font-size: 1.5rem; cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0,120,215,0.10);
+            border-radius: 50%; width: 44px; height: 44px; font-size: 1.5rem;
+            cursor: pointer; box-shadow: 0 2px 8px rgba(0,120,215,0.10);
             transition: background 0.2s, color 0.2s;
         }
-        .theme-toggle.dark { background: #222; color: #fff; border-color: #fff; }
+        .theme-toggle.dark {
+            background: #222; color: #fff; border-color: #fff;
+        }
         body.dark {
             background: linear-gradient(135deg, #1a2233 0%, #222 100%);
         }
         body.dark main {
             background: rgba(34,34,34,0.95); color: #eee;
         }
-        body.dark h2 { color: #ffb900; }
-        body.dark p, body.dark ul li { color: #eee; }
+        body.dark h2 {
+            color: #ffb900;
+        }
+        body.dark p,
+        body.dark ul li {
+            color: #eee;
+        }
         body.dark header {
             background: linear-gradient(90deg, #222 60%, #444 100%);
         }
-        body.dark .bubble1, body.dark .bubble2, body.dark .bubble3, body.dark .bubble4 {
+        body.dark .bubble1,
+        body.dark .bubble2,
+        body.dark .bubble3,
+        body.dark .bubble4 {
             filter: brightness(0.7);
         }
-        body.dark form { background: #23272f; }
-        body.dark label { color: #ffb900; }
-        body.dark input, body.dark textarea {
+        body.dark form {
+            background: #23272f;
+        }
+        body.dark label {
+            color: #ffb900;
+        }
+        body.dark input,
+        body.dark textarea {
             background: #23272f; color: #fff; border-color: #444;
         }
-        body.dark input:focus, body.dark textarea:focus {
-            background: #1a2233; border-color: #ffb900; box-shadow: 0 0 0 2px #ffb900;
+        body.dark input:focus,
+        body.dark textarea:focus {
+            background: #1a2233; border-color: #ffb900;
+            box-shadow: 0 0 0 2px #ffb900;
         }
         body.dark button[type="submit"] {
             background: linear-gradient(90deg, #ffb900 60%, #e81123 100%);
@@ -132,13 +194,22 @@
             background: #444; color: #fff;
         }
         #gameContainer {
-            width: 100%; height: 600px; margin: 2rem auto; border: 2px solid #0078d7;
-            border-radius: 8px; overflow: hidden;
+            width: 100%; height: 600px; margin: 2rem auto;
+            border: 2px solid #0078d7; border-radius: 8px; overflow: hidden;
         }
         @keyframes shakeAnim2 {
             0% { transform: rotate(0deg); }
             50% { transform: rotate(2deg); }
             100% { transform: rotate(0deg); }
+        }
+        /* Kleine helper voor de ingesloten video */
+        .video-container {
+            position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+            margin-top: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .video-container iframe {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            border: 0;
         }
     </style>
 </head>
@@ -166,6 +237,18 @@
             <li>Dark Mode met één klik</li>
             <li>Nieuw: 3D WebGL spel</li>
         </ul>
+        <!-- Nieuwe extra inhoud -->
+        <article id="extraContent">
+            <h2>Extra Interactieve Inhoud</h2>
+            <p>Een inspirerende video die laat zien hoe krachtig webtechnologie kan zijn:</p>
+            <div class="video-container">
+                <iframe
+                    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </article>
         <form id="contactForm" autocomplete="off">
             <div class="floating-label">
                 <input type="text" id="naam" name="naam" placeholder=" " required>
@@ -180,7 +263,7 @@
         <div id="gameContainer"></div>
     </main>
     <footer>
-        &copy; 2024 Mijn High-Tech Pagina 
+        &copy; 2024 Mijn High-Tech Pagina
     </footer>
     <canvas class="confetti" id="confettiCanvas"></canvas>
     <script src="https://cdn.jsdelivr.net/npm/three@0.152.0/build/three.min.js"></script>
@@ -194,18 +277,23 @@
                 }
             });
         });
+
         const form = document.getElementById('contactForm');
         const confettiCanvas = document.getElementById('confettiCanvas');
         const ctx = confettiCanvas.getContext('2d');
         let confettiPieces = [];
+
         function resizeCanvas() {
             confettiCanvas.width = window.innerWidth;
             confettiCanvas.height = window.innerHeight;
         }
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
+
         function randomColor() {
-            const colors = ['#0078d7','#005fa3','#b6c6e3','#c7e0f4','#f4f4f4','#ffb900','#e81123','#107c10'];
+            const colors = [
+                '#0078d7','#005fa3','#b6c6e3','#c7e0f4','#f4f4f4','#ffb900','#e81123','#107c10'
+            ];
             return colors[Math.floor(Math.random() * colors.length)];
         }
         function launchConfetti() {
@@ -248,17 +336,23 @@
             launchConfetti();
             form.reset();
             form.querySelector('button[type="submit"]').textContent = "Verzonden!";
-            setTimeout(() => { form.querySelector('button[type="submit"]').textContent = "Verstuur"; }, 1800);
+            setTimeout(() => {
+                form.querySelector('button[type="submit"]').textContent = "Verstuur";
+            }, 1800);
             document.querySelector('main').classList.add('shake');
-            setTimeout(() => { document.querySelector('main').classList.remove('shake'); }, 400);
+            setTimeout(() => {
+                document.querySelector('main').classList.remove('shake');
+            }, 400);
             fireworkAt(window.innerWidth/2, window.innerHeight/2 + 60);
         });
+
         const themeToggle = document.getElementById('themeToggle');
         themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark');
             themeToggle.classList.toggle('dark');
             themeToggle.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
         });
+
         function fireworkAt(x, y) {
             const colors = ['#ffb900','#e81123','#0078d7','#107c10','#fff','#c7e0f4'];
             const firework = document.createElement('div');
@@ -268,6 +362,7 @@
             firework.style.width = '120px';
             firework.style.height = '120px';
             document.body.appendChild(firework);
+
             for (let i = 0; i < 24; i++) {
                 const dot = document.createElement('div');
                 dot.className = 'firework-dot';
@@ -275,6 +370,7 @@
                 dot.style.left = '60px';
                 dot.style.top = '60px';
                 firework.appendChild(dot);
+
                 const angle = (i/24) * 2 * Math.PI;
                 const dist = 40 + Math.random()*30;
                 setTimeout(() => {
@@ -284,12 +380,15 @@
                     dot.style.opacity = 0;
                 }, 10);
             }
-            setTimeout(() => { firework.remove(); }, 900);
+            setTimeout(() => {
+                firework.remove();
+            }, 900);
         }
         document.addEventListener('click', function(e) {
             if (e.target === themeToggle || e.target === confettiCanvas) return;
             fireworkAt(e.clientX, e.clientY);
         });
+
         const facts = [
             "JavaScript werd in 10 dagen uitgevonden.",
             "De naam JavaScript heeft niets met Java te maken.",
@@ -308,17 +407,25 @@
             e.stopPropagation();
             randomFactText.textContent = facts[Math.floor(Math.random()*facts.length)];
         });
+
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'c' && (e.ctrlKey || e.metaKey)) { launchConfetti(); }
+            if (e.key === 'c' && (e.ctrlKey || e.metaKey)) {
+                launchConfetti();
+            }
         });
+
         const headerH1 = document.querySelector('header h1');
         const originalText = headerH1.textContent;
         let typingIndex = 0;
         function typeHeader() {
-            headerH1.textContent = originalText.slice(0, typingIndex) + (typingIndex % 2 === 0 ? '|' : '');
+            headerH1.textContent = originalText.slice(0, typingIndex) +
+                (typingIndex % 2 === 0 ? '|' : '');
             typingIndex++;
-            if (typingIndex <= originalText.length) setTimeout(typeHeader, 120);
-            else headerH1.textContent = originalText;
+            if (typingIndex <= originalText.length) {
+                setTimeout(typeHeader, 120);
+            } else {
+                headerH1.textContent = originalText;
+            }
         }
         setTimeout(typeHeader, 800);
         function updateGreeting() {
@@ -331,6 +438,7 @@
             headerH1.textContent = greet;
         }
         setTimeout(updateGreeting, 3200);
+
         const main = document.querySelector('main');
         main.addEventListener('mouseenter', () => {
             main.style.boxShadow = '0 0 0 4px #ffb900, 0 8px 32px rgba(0,0,0,0.1)';
@@ -339,235 +447,103 @@
         main.addEventListener('mouseleave', () => {
             main.style.boxShadow = '0 8px 32px rgba(0,0,0,0.1)';
         });
+
         const konami = [38,38,40,40,37,39,37,39,66,65];
         let konamiIndex = 0;
         document.addEventListener('keydown', function(e) {
             if (e.keyCode === konami[konamiIndex]) {
                 konamiIndex++;
                 if (konamiIndex === konami.length) {
-                    for(let i=0;i<3;i++) setTimeout(launchConfetti, i*400);
+                    for(let i=0; i<3; i++) setTimeout(launchConfetti, i*400);
                     konamiIndex = 0;
                 }
             } else {
                 konamiIndex = 0;
             }
         });
+
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
             fireworkAt(e.clientX, e.clientY);
-        });         
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.152.0/examples/js/controls/OrbitControls.js"></script>    
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="UTF-8">  
-    <title>3D Mini-Spel</title>
-    <style>
-        body { margin: 0; background: #f0f0f0; }
-        #gameContainer { width: 100%; height: 100vh; display: flex; justify-content: center; align-items: center; }
-        canvas { display: block; }
-    </style>
-</head>
-<body>
-    <div id="gameContainer"></div>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.152.0/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.152.0/examples/js/controls/OrbitControls.js"></script>
-    <script>
-        // Ensure the game container is ready
-        document.getElementById('gameContainer').innerHTML = ''; // Clear any previous content
-        document.body.style.margin = '0'; // Reset body margin to avoid scrollbars
-        document.body.style.background = '#f0f0f0'; // Set a neutral background for the game
-        document.body.style.overflow = 'hidden'; // Prevent scrolling during the game
-        document.body.style.display = 'flex'; // Use flexbox for centering
-        document.body.style.justifyContent = 'center'; // Center horizontally
-        document.body.style.alignItems = 'center'; // Center vertically
-        document.body.style.height = '100vh'; // Full viewport height
-        document.body.style.width = '100vw'; // Full viewport width
-        document.body.style.backgroundColor = '#f0f0f0'; // Set a light background color
-        document.body.style.display = 'flex'; // Use flexbox for centering
-        document.body.style.justifyContent = 'center'; // Center horizontally
-        document.body.style.alignItems = 'center'; // Center vertically
-        document.body.style.overflow = 'hidden'; // Prevent scrolling
-        document.body.style.margin = '0'; // Reset body margin to avoid scrollbars
-        document.body.style.fontFamily = 'Arial, sans-serif'; // Set a default font for the game
-        document.body.style.color = '#333'; // Set a default text color for the game
-        document.body.style.textAlign = 'center'; // Center text in the body
-        document.body.style.background = 'linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%)'; // Set a gradient background
-        document.body.style.transition = 'background 0.4s'; // Smooth background transition
-        document.body.style.padding = '0'; // Remove any default padding
-        document.body.style.boxSizing = 'border-box'; // Ensure padding and border are included in element's total width and height
-        document.body.style.display = 'flex'; // Use flexbox for centering
-        document.body.style.justifyContent = 'center'; // Center horizontally
-        document.body.style.alignItems = 'center'; // Center vertically
-        document.body.style.height = '100vh'; // Full viewport height
-        document.body.style.width = '100vw'; // Full viewport width
-        document.body.style.backgroundColor = '#f0f0f0'; // Set a light background color
-        document.body.style.overflow = 'hidden'; // Prevent scrolling
-        document.body.style.margin = '0'; // Reset body margin to avoid scrollbars
-        document.body.style.fontFamily = 'Arial, sans-serif'; // Set a default font for the game
-        document.body.style.color = '#333'; // Set a default text color for the game
-        document.body.style.textAlign = 'center'; // Center text in the body
-        document.body.style.background = 'linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%)'; // Set a gradient background
-        document.body.style.transition = 'background 0.4s'; // Smooth background transition
-        document.body.style.padding = '0'; // Remove any default padding
-        document.body.style.boxSizing = 'border-box'; // Ensure padding and border are included in element's total width and height
-        document.body.style.display = 'flex'; // Use flexbox for centering
-        document.body.style.justifyContent = 'center'; // Center horizontally
-        document.body.style.alignItems = 'center'; // Center vertically
-        document.body.style.height = '100vh'; // Full viewport height
-        document.body.style.width = '100vw'; // Full viewport width
-        document.body.style.backgroundColor = '#f0f0f0'; // Set a light background color
-        document.body.style.overflow = 'hidden'; // Prevent scrolling
-        document.body.style.margin = '0'; // Reset body margin to avoid scrollbars
-
-        document.body.style.fontFamily = 'Arial, sans-serif'; // Set a default font for the game
-        document.body.style.color = '#333'; // Set a default text color for the game
-        document.body.style.textAlign = 'center'; // Center text in the body
-        document.body.style.background = 'linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%)'; // Set a gradient background
-        document.body.style.transition = 'background 0.4s'; // Smooth background transition
-        document.body.style.padding = '0'; // Remove any default padding
-        document.body.style.boxSizing = 'border-box'; // Ensure padding and border are included in element's total width and height
-        document.body.style.display = 'flex'; // Use flexbox for centering
-        document.body.style.justifyContent = 'center'; // Center horizontally
-        document.body.style.alignItems = 'center'; // Center vertically
-        document.body.style.height = '100vh'; // Full viewport height
-        document.body.style.width = '100vw'; // Full viewport width
-        document.body.style.backgroundColor = '#f0f0f0'; // Set a light background color
-        document.body.style.overflow = 'hidden'; // Prevent scrolling
-        document.body.style.margin = '0'; // Reset body margin to avoid scrollbars
-        document.body.style.fontFamily = 'Arial, sans-serif'; // Set a default font for the game
-        document.body.style.color = '#333'; // Set a default text color for the game
-        document.body.style.textAlign = 'center'; // Center text in the body
-        document.body.style.background = 'linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%)'; // Set a gradient background
-        document.body.style.transition = 'background 0.4s'; // Smooth background transition
-        document.body.style.padding = '0'; // Remove any default padding
-        document.body.style.boxSizing = 'border-box'; // Ensure padding and border are included in element's total width and height
-        document.body.style.display = 'flex'; // Use flexbox for centering
-        document.body.style.justifyContent = 'center'; // Center horizontally
-        document.body.style.alignItems = 'center'; // Center vertically
-        document.body.style.height = '100vh'; // Full viewport height
-        document.body.style.width = '100vw'; // Full viewport width
-        document.body.style.backgroundColor = '#f0f0f0'; // Set a light background color
-        document.body.style.overflow = 'hidden'; // Prevent scrolling
-        document.body.style.margin = '0'; // Reset body margin to avoid scrollbars
-        document.body.style.fontFamily = 'Arial, sans-serif'; // Set a default font for the game
-        document.body.style.color = '#333'; // Set a default text color for the game
-        document.body.style.textAlign = 'center'; // Center text in the body
-        document.body.style.background = 'linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%)'; // Set a gradient background
-        document.body.style.transition = 'background 0.4s'; // Smooth background transition
-        document.body.style.padding = '0'; // Remove any default padding
-        document.body.style.boxSizing = 'border-box'; // Ensure padding and border are included in element's total width and height
-        document.body.style.display = 'flex'; // Use flexbox for centering
-        document.body.style.justifyContent = 'center'; // Center horizontally
-        document.body.style.alignItems = 'center'; // Center vertically
-        document.body.style.height = '100vh'; // Full viewport height
-        document.body.style.width = '100vw'; // Full viewport width
-        document.body.style.backgroundColor = '#f0f0f0'; // Set a light background color
-        document.body.style.overflow = 'hidden'; // Prevent scrolling
-
-        document.body.style.margin = '0'; // Reset body margin to avoid scrollbars
-        document.body.style.fontFamily = 'Arial, sans-serif'; // Set a default font for the game
-        document.body.style.color = '#333'; // Set a default text color for the game
-        document.body.style.textAlign = 'center'; // Center text in the body
-        document.body.style.background = 'linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%)'; // Set a gradient background
-        document.body.style.transition = 'background 0.4s'; // Smooth background transition
-        document.body.style.padding = '0'; // Remove any default padding
-        document.body.style.boxSizing = 'border-box'; // Ensure padding and border are included in element's total width and height
-        document.body.style.display = 'flex'; // Use flexbox for centering
-        document.body.style.justifyContent = 'center'; // Center horizontally
-        document.body.style.alignItems = 'center'; // Center vertically
-        document.body.style.height = '100vh'; // Full viewport height
-        document.body.style.width = '100vw'; // Full viewport width
-        document.body.style.backgroundColor = '#f0f0f0'; // Set a light background color
-        document.body.style.overflow = 'hidden'; // Prevent scrolling
-
-        document.body.style.margin = '0'; // Reset body margin to avoid scrollbars
-
-        document.body.style.fontFamily = 'Arial, sans-serif'; // Set a default font for the game
-        document.body.style.color = '#333'; // Set a default text color for the game
-        document.body.style.textAlign = 'center'; // Center text in the body
-
-        document.body.style.background = 'linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%)'; // Set a gradient background
-        document.body.style.transition = 'background 0.4s'; // Smooth background transition
-        document.body.style.padding = '0'; // Remove any default padding
-        document.body.style.boxSizing = 'border-box'; // Ensure padding and border are included in element's total width and height
-
-        document.body.style.display = 'flex'; // Use flexbox for centering
-        document.body.style.justifyContent = 'center'; // Center horizontally
-        document.body.style.alignItems = 'center'; // Center vertically
-        document.body.style.height = '100vh'; // Full viewport height
-        document.body.style.width = '100vw'; // Full viewport width
-
-        document.body.style.backgroundColor = '#f0f0f0'; // Set a light background color
-
-        document.body.style.overflow = 'hidden'; // Prevent scrolling
-        document.body.style.margin = '0'; // Reset body margin to avoid scrollbars                                      
-        document.body.style.fontFamily = 'Arial, sans-serif'; // Set a default font for the game
-        document.body.style.color = '#333'; // Set a default text color for the game                    
-
-        document.body.style.textAlign = 'center'; // Center text in the body
-
-
-
-        document.body.style.background = 'linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%)'; // Set a gradient background
-        document.body.style.transition = 'background 0.4s'; // Smooth background transition
-        document.body.style.padding = '0'; // Remove any default padding
-        document.body.style.boxSizing = 'border-box'; // Ensure padding and border are included in element's total width and height
-        document.body.style.display = 'flex'; // Use flexbox for centering
-        document.body.style.justifyContent = 'center'; // Center horizontally       
-        document.body.style.alignItems = 'center'; // Center vertically
-        document.body.style.height = '100vh'; // Full viewport height   
-        document.body.style.width = '100vw'; // Full viewport width 
-        document.body.style.backgroundColor = '#f0f0f0'; // Set a light background color    
-        document.body.style.overflow = 'hidden'; // Prevent scrolling   
-        document.body.style.margin = '0'; // Reset body margin to avoid scrollbars  
-        document.body.style.fontFamily = 'Arial, sans-serif'; // Set a default font for the game
-        document.body.style.color = '#333'; // Set a default text color for the game        
-        document.body.style.textAlign = 'center'; // Center text in the body    
-        document.body.style.background = 'linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%)'; // Set a gradient background  
-        document.body.style.transition = 'background 0.4s'; // Smooth background transition 
-        document.body.style.padding = '0'; // Remove any default padding    
-        document.body.style.boxSizing = 'border-box'; // Ensure padding and border are included in element's total width and height
-        document.body.style.display = 'flex'; // Use flexbox for centering  
-        document.body.style.justifyContent = 'center'; // Center horizontally
-        document.body.style.alignItems = 'center'; // Center vertically
-        document.body.style.height = '100vh'; // Full viewport height
-
-        document.body.style.width = '100vw'; // Full viewport width 
-        document.body.style.backgroundColor = '#f0f0f0'; // Set a light background color
-        document.body.style.overflow = 'hidden'; // Prevent scrolling   
-        document.body.style.margin = '0'; // Reset body margin to avoid scrollbars  
-        document.body.style.fontFamily = 'Arial, sans-serif'; // Set a default font for the game    
-        document.body.style.color = '#333'; // Set a default text color for the game
-</body>
-
-        // Minimal 3D setup
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, document.getElementById('gameContainer').clientWidth / document.getElementById('gameContainer').clientHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(document.getElementById('gameContainer').clientWidth, document.getElementById('gameContainer').clientHeight);
-        document.getElementById('gameContainer').appendChild(renderer.domElement);
-
-        const geometry = new THREE.BoxGeometry();
-        const material = new THREE.MeshBasicMaterial({ color: 0xffb900, wireframe: false });
-        const cube = new THREE.Mesh(geometry, material);
-        scene.add(cube);
-
-        camera.position.z = 5;
-        let speed = 0.05;
-        function animate() {
-            requestAnimationFrame(animate);
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'w') camera.position.z -= speed;
-            if (e.key === 's') camera.position.z += speed;
-            if (e.key === 'a') camera.position.x -= speed;
-            if (e.key === 'd') camera.position.x += speed;
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.152.0/examples/js/controls/OrbitControls.js"></script>
+
+    <!-- Ingesloten 3D Game -->
+    <!DOCTYPE html>
+    <html lang="nl">
+    <head>
+        <meta charset="UTF-8">
+        <title>3D Mini-Spel</title>
+        <style>
+            body {
+                margin: 0; background: #f0f0f0;
+            }
+            #gameContainer {
+                width: 100%; height: 100vh; display: flex;
+                justify-content: center; align-items: center;
+            }
+            canvas {
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="gameContainer"></div>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.152.0/build/three.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.152.0/examples/js/controls/OrbitControls.js"></script>
+        <script>
+            document.getElementById('gameContainer').innerHTML = '';
+            document.body.style.margin = '0';
+            document.body.style.background = '#f0f0f0';
+            document.body.style.overflow = 'hidden';
+            document.body.style.display = 'flex';
+            document.body.style.justifyContent = 'center';
+            document.body.style.alignItems = 'center';
+            document.body.style.height = '100vh';
+            document.body.style.width = '100vw';
+            document.body.style.fontFamily = 'Arial, sans-serif';
+            document.body.style.color = '#333';
+            document.body.style.textAlign = 'center';
+            document.body.style.background = 'linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%)';
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(
+                75,
+                document.getElementById('gameContainer').clientWidth /
+                document.getElementById('gameContainer').clientHeight,
+                0.1,
+                1000
+            );
+            const renderer = new THREE.WebGLRenderer();
+            renderer.setSize(
+                document.getElementById('gameContainer').clientWidth,
+                document.getElementById('gameContainer').clientHeight
+            );
+            document.getElementById('gameContainer').appendChild(renderer.domElement);
+
+            const geometry = new THREE.BoxGeometry();
+            const material = new THREE.MeshBasicMaterial({ color: 0xffb900, wireframe: false });
+            const cube = new THREE.Mesh(geometry, material);
+            scene.add(cube);
+
+            camera.position.z = 5;
+            let speed = 0.05;
+
+            function animate() {
+                requestAnimationFrame(animate);
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'w') camera.position.z -= speed;
+                if (e.key === 's') camera.position.z += speed;
+                if (e.key === 'a') camera.position.x -= speed;
+                if (e.key === 'd') camera.position.x += speed;
+            });
+        </script>
+    </body>
+    </html>
 </body>
 </html>
