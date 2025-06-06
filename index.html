@@ -1,549 +1,301 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>High-Tech Webpage + Game</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Programming Language Demos</title>
     <style>
-        * {
-            margin: 0; padding: 0; box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        body {
-            min-height: 100vh; background: linear-gradient(135deg, #fff 0%, #ebf8ff 100%);
-            overflow-x: hidden; transition: background 0.4s;
-        }
-        header, main, footer {
-            max-width: 1200px; margin: auto; padding: 1rem;
-        }
-        header h1 {
-            font-size: 2.5rem; text-align: center; margin-bottom: 1rem;
-        }
-        main {
-            background: rgba(255,255,255,0.95); padding: 2rem; margin-bottom: 2rem;
-            border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-            transition: box-shadow 0.4s;
-        }
-        main:hover {
-            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-        }
-        h2 {
-            margin-bottom: 1rem; font-size: 1.8rem; color: #0078d7;
-            position: relative; display: inline-block;
-        }
-        h2::after {
-            content: ""; width: 60%; height: 3px; background: #0078d7;
-            position: absolute; left: 0; bottom: -6px;
-        }
-        ul { margin: 1rem 0; list-style: none; }
-        li {
-            margin-bottom: 0.5rem; padding: 0.5rem 0;
-        }
-        .tooltip {
-            position: relative; cursor: pointer; display: inline-block;
-            background: #f1f9ff; border-radius: 4px; padding: 0.3rem 0.5rem;
-            transition: background 0.2s;
-        }
-        .tooltip:hover {
-            background: #dceefa;
-        }
-        .tooltiptext {
-            visibility: hidden; width: 180px; background: #0078d7; color: #fff;
-            text-align: center; border-radius: 8px; padding: 0.5rem;
-            position: absolute; z-index: 999; bottom: 125%; left: 50%;
-            margin-left: -90px; opacity: 0;
-            transition: opacity 0.2s, visibility 0.2s; font-size: 0.9rem;
-        }
-        .tooltip:hover .tooltiptext {
-            visibility: visible; opacity: 1;
-        }
-        form {
-            background: #fff; padding: 1.5rem; margin-top: 1rem;
-            border: 2px solid #f0f0f0; border-radius: 6px;
-        }
-        .floating-label {
-            position: relative; margin-bottom: 1.5rem;
-        }
-        input, textarea {
-            width: 100%; border: 1px solid #ccc; border-radius: 4px;
-            padding: 0.8rem; font-size: 1rem; outline: none;
-            transition: border-color 0.2s;
-        }
-        input:focus, textarea:focus {
-            border-color: #0078d7;
-        }
-        label {
-            position: absolute; top: 0.8rem; left: 0.8rem; color: #777;
-            cursor: text; transition: 0.2s; background: #fff; padding: 0 0.3rem;
-        }
-        input:not(:placeholder-shown) + label,
-        textarea.has-value + label {
-            transform: translateY(-1.6rem); font-size: 0.8rem; color: #0078d7;
-        }
-        button[type="submit"] {
-            background: linear-gradient(90deg, #0078d7 60%, #00bcf2 100%);
-            color: #fff; cursor: pointer; padding: 1rem 1.5rem; border: none;
-            border-radius: 6px; font-size: 1rem; transition: background 0.3s;
-        }
-        button[type="submit"]:hover {
-            background: linear-gradient(90deg, #00a4d7 60%, #009ed2 100%);
-        }
-        footer {
-            text-align: center; padding: 1rem 0; color: #666;
-        }
-        .bubble {
-            position: fixed; border-radius: 50%; opacity: 0.2; z-index: -1;
-            animation: float 15s infinite ease-in-out;
-        }
-        .bubble1 {
-            width: 300px; height: 300px; background: #0078d7; top: 20%; left: 10%;
-        }
-        .bubble2 {
-            width: 200px; height: 200px; background: #e81123; top: 60%; left: 80%;
-            animation-duration: 18s;
-        }
-        .bubble3 {
-            width: 250px; height: 250px; background: #ffb900; top: 40%; left: 50%;
-            animation-duration: 14s;
-        }
-        .bubble4 {
-            width: 100px; height: 100px; background: #107c10; top: 75%; left: 15%;
-            animation-duration: 20s;
-        }
-        @keyframes float {
-            0% { transform: translateY(0) translateX(0); }
-            50% { transform: translateY(-40px) translateX(20px); }
-            100% { transform: translateY(0) translateX(0); }
-        }
-        .firework {
-            position: fixed; pointer-events: none; z-index: 2000;
-        }
-        .firework-dot {
-            position: absolute; border-radius: 50%; width: 8px; height: 8px;
-            opacity: 0.85;
-        }
-        canvas.confetti {
-            pointer-events: none; position: fixed; top: 0; left: 0; z-index: 1000;
-        }
-        .shake {
-            animation: shakeAnim 0.4s;
-        }
-        @keyframes shakeAnim {
-            0% { transform: translateX(0); }
-            20% { transform: translateX(-8px); }
-            40% { transform: translateX(8px); }
-            60% { transform: translateX(-8px); }
-            80% { transform: translateX(8px); }
-            100% { transform: translateX(0); }
-        }
-        .theme-toggle {
-            position: fixed; top: 18px; right: 24px; z-index: 100;
-            background: #fff; color: #0078d7; border: 2px solid #0078d7;
-            border-radius: 50%; width: 44px; height: 44px; font-size: 1.5rem;
-            cursor: pointer; box-shadow: 0 2px 8px rgba(0,120,215,0.10);
-            transition: background 0.2s, color 0.2s;
-        }
-        .theme-toggle.dark {
-            background: #222; color: #fff; border-color: #fff;
-        }
-        body.dark {
-            background: linear-gradient(135deg, #1a2233 0%, #222 100%);
-        }
-        body.dark main {
-            background: rgba(34,34,34,0.95); color: #eee;
-        }
-        body.dark h2 {
-            color: #ffb900;
-        }
-        body.dark p,
-        body.dark ul li {
-            color: #eee;
-        }
-        body.dark header {
-            background: linear-gradient(90deg, #222 60%, #444 100%);
-        }
-        body.dark .bubble1,
-        body.dark .bubble2,
-        body.dark .bubble3,
-        body.dark .bubble4 {
-            filter: brightness(0.7);
-        }
-        body.dark form {
-            background: #23272f;
-        }
-        body.dark label {
-            color: #ffb900;
-        }
-        body.dark input,
-        body.dark textarea {
-            background: #23272f; color: #fff; border-color: #444;
-        }
-        body.dark input:focus,
-        body.dark textarea:focus {
-            background: #1a2233; border-color: #ffb900;
-            box-shadow: 0 0 0 2px #ffb900;
-        }
-        body.dark button[type="submit"] {
-            background: linear-gradient(90deg, #ffb900 60%, #e81123 100%);
-            color: #222;
-        }
-        body.dark button[type="submit"]:hover {
-            background: linear-gradient(90deg, #e81123 60%, #ffb900 100%);
-        }
-        body.dark .tooltip .tooltiptext {
-            background: #444; color: #fff;
-        }
-        #gameContainer {
-            width: 100%; height: 600px; margin: 2rem auto;
-            border: 2px solid #0078d7; border-radius: 8px; overflow: hidden;
-        }
-        @keyframes shakeAnim2 {
-            0% { transform: rotate(0deg); }
-            50% { transform: rotate(2deg); }
-            100% { transform: rotate(0deg); }
-        }
-        /* Kleine helper voor de ingesloten video */
-        .video-container {
-            position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
-            margin-top: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .video-container iframe {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            border: 0;
+        body { font-family: system-ui, sans-serif; background: #f7f7fa; color: #222; margin: 0; }
+        header, nav, main, footer { max-width: 900px; margin: auto; }
+        header { padding: 2rem 1rem 1rem 1rem; }
+        nav { background: #0078d7; color: #fff; padding: 0.5rem 1rem; border-radius: 8px; margin-bottom: 2rem; }
+        nav a { color: #fff; margin-right: 1.5rem; text-decoration: none; font-weight: 500; }
+        nav a:hover { text-decoration: underline; }
+        section { background: #fff; border-radius: 10px; margin-bottom: 2rem; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.04);}
+        h2 { color: #0078d7; }
+        .code-demo, .php-demo { background: #f3f3f7; border-radius: 6px; padding: 0.7rem 1rem; margin: 1rem 0; font-family: 'Fira Mono', monospace, monospace; font-size: 1rem; }
+        .css-anim-box { width: 80px; height: 80px; background: linear-gradient(135deg, #ffb900, #0078d7); border-radius: 16px; margin: 1rem auto; box-shadow: 0 4px 16px rgba(0,0,0,0.15); animation: spin 2s linear infinite;}
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .grid-demo { display: grid; grid-template-columns: repeat(2,1fr); gap: 0.5rem; margin: 1rem 0;}
+        .grid-demo div { background: #e5e5f7; border-radius: 6px; padding: 0.7rem; text-align: center;}
+        .js-demo-btn { background: #0078d7; color: #fff; border: none; border-radius: 6px; padding: 0.5rem 1.2rem; margin: 0.5rem 0; cursor: pointer; font-size: 1rem;}
+        .js-demo-btn:hover { background: #005fa3; }
+        .tooltip { position: relative; display: inline-block; cursor: pointer;}
+        .tooltiptext { visibility: hidden; width: 160px; background: #222; color: #fff; text-align: center; border-radius: 6px; padding: 0.5rem; position: absolute; z-index: 1; bottom: 125%; left: 50%; margin-left: -80px; opacity: 0; transition: opacity 0.3s;}
+        .tooltip:hover .tooltiptext { visibility: visible; opacity: 1;}
+        #threeDemo { width: 100%; height: 320px; margin: 1rem 0; background: #222; border-radius: 10px; }
+        @media (max-width: 600px) {
+            main, header, nav, footer { max-width: 100%; }
+            section { padding: 1rem; }
         }
     </style>
 </head>
 <body>
-    <div class="bubble bubble1"></div>
-    <div class="bubble bubble2"></div>
-    <div class="bubble bubble3"></div>
-    <div class="bubble bubble4"></div>
-    <button class="theme-toggle" id="themeToggle" title="Wissel thema">🌙</button>
     <header>
-        <h1>Welkom op mijn high-tech website!</h1>
+        <h1>Programming Language Demos</h1>
+        <p>Explore HTML5, CSS3, JavaScript, PHP, and 3D graphics features with live and code examples.</p>
     </header>
+    <nav>
+        <a href="#html">HTML5</a>
+        <a href="#css">CSS3</a>
+        <a href="#js">JavaScript</a>
+        <a href="#php">PHP</a>
+        <a href="#three">3D</a>
+    </nav>
     <main>
-        <h2>Over deze website</h2>
-        <p>Alledaagse techniek, confetti, vuurwerk, dark mode en nu zelfs een 3D mini-spel!</p>
-        <ul>
-            <li>HTML5 structuur & responsief ontwerp</li>
-            <li>Krachtige CSS-animaties en effecten</li>
-            <li class="tooltip">Confetti bij formulierverzending
-                <span class="tooltiptext">Probeer het formulier eens!</span>
-            </li>
-            <li class="tooltip" id="randomFactLi">Random feitje
-                <span class="tooltiptext" id="randomFactText">Klik voor een feitje!</span>
-            </li>
-            <li>Dark Mode met één klik</li>
-            <li>Nieuw: 3D WebGL spel</li>
-        </ul>
-        <!-- Nieuwe extra inhoud -->
-        <article id="extraContent">
-            <h2>Extra Interactieve Inhoud</h2>
-            <p>Een inspirerende video die laat zien hoe krachtig webtechnologie kan zijn:</p>
-            <div class="video-container">
-                <iframe
-                    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
-                </iframe>
+        <!-- HTML5 Section -->
+        <section id="html">
+            <h2>HTML5 Features</h2>
+            <ul>
+                <li>Semantic tags: <code>&lt;header&gt;, &lt;nav&gt;, &lt;main&gt;, &lt;section&gt;, &lt;footer&gt;</code></li>
+                <li>Responsive layouts with <code>&lt;meta viewport&gt;</code></li>
+                <li>Forms, inputs, validation</li>
+                <li>Media: <code>&lt;video&gt;, &lt;audio&gt;</code></li>
+                <li>SVG, Canvas, WebGL</li>
+                <li>Accessibility: <code>alt</code>, <code>aria-*</code></li>
+            </ul>
+            <div class="code-demo">
+                &lt;section&gt;<br>
+                &nbsp;&nbsp;&lt;h2&gt;HTML5 Example&lt;/h2&gt;<br>
+                &nbsp;&nbsp;&lt;p&gt;This is a semantic section.&lt;/p&gt;<br>
+                &lt;/section&gt;
             </div>
-        </article>
-        <form id="contactForm" autocomplete="off">
-            <div class="floating-label">
-                <input type="text" id="naam" name="naam" placeholder=" " required>
-                <label for="naam">Naam:</label>
+            <div class="code-demo">
+                &lt;details&gt;<br>
+                &nbsp;&nbsp;&lt;summary&gt;Click to expand&lt;/summary&gt;<br>
+                &nbsp;&nbsp;Extra HTML5 content!<br>
+                &lt;/details&gt;
             </div>
-            <div class="floating-label">
-                <textarea id="bericht" name="bericht" rows="4" cols="40" placeholder=" " required></textarea>
-                <label for="bericht">Bericht:</label>
+            <details>
+                <summary>Click to expand (live demo)</summary>
+                Extra HTML5 content!
+            </details>
+            <div class="code-demo">
+                &lt;form&gt;<br>
+                &nbsp;&nbsp;&lt;input type="email" required placeholder="Email"&gt;<br>
+                &nbsp;&nbsp;&lt;button&gt;Submit&lt;/button&gt;<br>
+                &lt;/form&gt;
             </div>
-            <button type="submit">Verstuur</button>
-        </form>
-        <div id="gameContainer"></div>
+            <form>
+                <input type="email" required placeholder="Email">
+                <button>Submit</button>
+            </form>
+            <div class="code-demo">
+                &lt;video controls width="200"&gt;<br>
+                &nbsp;&nbsp;&lt;source src="sample.mp4" type="video/mp4"&gt;<br>
+                &lt;/video&gt;
+            </div>
+            <video controls width="200">
+                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+            </video>
+        </section>
+        <!-- CSS3 Section -->
+        <section id="css">
+            <h2>CSS3 Features</h2>
+            <ul>
+                <li>Gradients, shadows, border-radius</li>
+                <li>Animations &amp; transitions</li>
+                <li>Flexbox &amp; Grid layouts</li>
+                <li>Media queries for responsiveness</li>
+                <li>Custom properties (variables)</li>
+            </ul>
+            <div class="css-anim-box"></div>
+            <div class="grid-demo">
+                <div>Grid 1</div>
+                <div>Grid 2</div>
+                <div>Grid 3</div>
+                <div>Grid 4</div>
+            </div>
+            <div class="code-demo">
+                <pre>
+.box {
+  background: linear-gradient(90deg, #ffb900, #0078d7);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  border-radius: 12px;
+  transition: transform 0.3s;
+}
+.box:hover { transform: scale(1.08);}
+                </pre>
+            </div>
+            <div class="box" style="width:120px;height:60px;margin:1rem auto;"></div>
+            <div class="code-demo">
+                <pre>
+@media (max-width: 600px) {
+  .box { width: 80px; }
+}
+                </pre>
+            </div>
+        </section>
+        <!-- JavaScript Section -->
+        <section id="js">
+            <h2>JavaScript Features</h2>
+            <ul>
+                <li>DOM manipulation</li>
+                <li>Events &amp; interactivity</li>
+                <li>AJAX / Fetch API</li>
+                <li>Animations, games, 3D</li>
+                <li>LocalStorage, cookies</li>
+            </ul>
+            <button class="js-demo-btn" onclick="jsDemo()">Click for JS Demo</button>
+            <span id="jsDemoResult"></span>
+            <div class="tooltip" style="margin-left:1rem;">Hover for tooltip
+                <span class="tooltiptext">This is a CSS+JS tooltip!</span>
+            </div>
+            <div class="code-demo">
+                <pre>
+let count = localStorage.getItem('count') || 0;
+count++;
+localStorage.setItem('count', count);
+document.getElementById('jsStorageDemo').textContent = count;
+                </pre>
+            </div>
+            <div>
+                <button class="js-demo-btn" onclick="jsStorageDemo()">Count (LocalStorage)</button>
+                <span id="jsStorageDemo">0</span>
+            </div>
+            <div class="code-demo">
+                <pre>
+fetch('https://api.github.com/zen')
+  .then(r =&gt; r.text())
+  .then(text =&gt; alert(text));
+                </pre>
+            </div>
+            <button class="js-demo-btn" onclick="jsFetchDemo()">Fetch API Demo</button>
+            <div class="code-demo">
+                <pre>
+document.body.style.background = "#e0ffe0";
+                </pre>
+            </div>
+            <button class="js-demo-btn" onclick="document.body.style.background='#e0ffe0'">Change BG Color</button>
+        </section>
+        <!-- PHP Section -->
+        <section id="php">
+            <h2>PHP Features (Server-side)</h2>
+            <ul>
+                <li>Dynamic content generation</li>
+                <li>Form processing</li>
+                <li>Database interaction</li>
+                <li>Sessions &amp; cookies</li>
+            </ul>
+            <div class="php-demo">
+                &lt;?php<br>
+                &nbsp;&nbsp;echo "Hello from PHP! Today is " . date('l, d F Y');<br>
+                ?&gt;
+            </div>
+            <div>
+                <strong>PHP Output Example:</strong>
+                <span id="phpOutput"></span>
+            </div>
+            <div class="php-demo">
+                &lt;?php<br>
+                &nbsp;&nbsp;if(isset($_POST['name'])) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;echo "Hello, " . htmlspecialchars($_POST['name']);<br>
+                &nbsp;&nbsp;}<br>
+                ?&gt;
+            </div>
+            <form id="phpSimForm" style="margin-bottom:1rem;">
+                <input type="text" name="phpname" placeholder="Your name (PHP Sim)" required>
+                <button type="submit">Simulate PHP Greet</button>
+            </form>
+            <div id="phpSimResult"></div>
+        </section>
+        <!-- 3D Section -->
+        <section id="three">
+            <h2>3D Graphics (Three.js)</h2>
+            <div id="threeDemo"></div>
+            <div class="code-demo">
+                <pre>
+// Three.js: Rotating Cube
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, width/height, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(width, height);
+scene.add(new THREE.Mesh(
+  new THREE.BoxGeometry(), 
+  new THREE.MeshStandardMaterial({color: 0xffb900})
+));
+                </pre>
+            </div>
+        </section>
     </main>
-    <footer>
-        &copy; 2024 Mijn High-Tech Pagina
+    <footer style="text-align:center;padding:1rem 0;color:#888;">
+        &copy; 2024 Programming Demos
     </footer>
-    <canvas class="confetti" id="confettiCanvas"></canvas>
     <script src="https://cdn.jsdelivr.net/npm/three@0.152.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.152.0/examples/js/controls/OrbitControls.js"></script>
     <script>
-        document.querySelectorAll('.floating-label textarea').forEach(function(textarea) {
-            textarea.addEventListener('input', function() {
-                if (textarea.value) {
-                    textarea.classList.add('has-value');
-                } else {
-                    textarea.classList.remove('has-value');
-                }
+        // JS Demo
+        function jsDemo() {
+            const result = document.getElementById('jsDemoResult');
+            result.textContent = "Hello from JavaScript! " + new Date().toLocaleTimeString();
+            result.style.marginLeft = "1rem";
+        }
+        // JS Storage Demo
+        function jsStorageDemo() {
+            let count = localStorage.getItem('count') || 0;
+            count++;
+            localStorage.setItem('count', count);
+            document.getElementById('jsStorageDemo').textContent = count;
+        }
+        // JS Fetch Demo
+        function jsFetchDemo() {
+            fetch('https://api.github.com/zen')
+                .then(r => r.text())
+                .then(text => alert("GitHub Zen: " + text));
+        }
+        // PHP Output Simulation
+        document.getElementById('phpOutput').textContent =
+            "Hello from PHP! Today is " + (new Date()).toLocaleDateString('en-US', {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
             });
-        });
-
-        const form = document.getElementById('contactForm');
-        const confettiCanvas = document.getElementById('confettiCanvas');
-        const ctx = confettiCanvas.getContext('2d');
-        let confettiPieces = [];
-
-        function resizeCanvas() {
-            confettiCanvas.width = window.innerWidth;
-            confettiCanvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        function randomColor() {
-            const colors = [
-                '#0078d7','#005fa3','#b6c6e3','#c7e0f4','#f4f4f4','#ffb900','#e81123','#107c10'
-            ];
-            return colors[Math.floor(Math.random() * colors.length)];
-        }
-        function launchConfetti() {
-            confettiPieces = [];
-            for (let i = 0; i < 80; i++) {
-                confettiPieces.push({
-                    x: Math.random() * confettiCanvas.width,
-                    y: -20,
-                    w: 10 + Math.random() * 6,
-                    h: 16 + Math.random() * 8,
-                    color: randomColor(),
-                    speed: 2 + Math.random() * 4,
-                    angle: Math.random() * 2 * Math.PI,
-                    rotation: Math.random() * 2 * Math.PI,
-                    rotationSpeed: (Math.random() - 0.5) * 0.2
-                });
-            }
-            animateConfetti();
-        }
-        function animateConfetti() {
-            ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-            let active = false;
-            confettiPieces.forEach(piece => {
-                piece.y += piece.speed;
-                piece.x += Math.sin(piece.angle) * 2;
-                piece.angle += 0.02;
-                piece.rotation += piece.rotationSpeed;
-                ctx.save();
-                ctx.translate(piece.x, piece.y);
-                ctx.rotate(piece.rotation);
-                ctx.fillStyle = piece.color;
-                ctx.fillRect(-piece.w/2, -piece.h/2, piece.w, piece.h);
-                ctx.restore();
-                if (piece.y < confettiCanvas.height + 30) active = true;
-            });
-            if (active) requestAnimationFrame(animateConfetti);
-        }
-        form.addEventListener('submit', function(e) {
+        // PHP Simulated Form
+        document.getElementById('phpSimForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            launchConfetti();
-            form.reset();
-            form.querySelector('button[type="submit"]').textContent = "Verzonden!";
-            setTimeout(() => {
-                form.querySelector('button[type="submit"]').textContent = "Verstuur";
-            }, 1800);
-            document.querySelector('main').classList.add('shake');
-            setTimeout(() => {
-                document.querySelector('main').classList.remove('shake');
-            }, 400);
-            fireworkAt(window.innerWidth/2, window.innerHeight/2 + 60);
+            const name = e.target.phpname.value.replace(/[<>"'&]/g, '');
+            document.getElementById('phpSimResult').textContent = "Hello, " + name + " (simulated PHP)";
+            e.target.reset();
         });
 
-        const themeToggle = document.getElementById('themeToggle');
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark');
-            themeToggle.classList.toggle('dark');
-            themeToggle.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
-        });
+        // Three.js 3D Demo (fixed)
+        const threeDiv = document.getElementById('threeDemo');
+        let width = threeDiv.offsetWidth;
+        let height = 320;
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, width/height, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({antialias:true});
+        renderer.setClearColor(0x222222);
+        renderer.setSize(width, height);
+        threeDiv.appendChild(renderer.domElement);
 
-        function fireworkAt(x, y) {
-            const colors = ['#ffb900','#e81123','#0078d7','#107c10','#fff','#c7e0f4'];
-            const firework = document.createElement('div');
-            firework.className = 'firework';
-            firework.style.left = (x-60) + 'px';
-            firework.style.top = (y-60) + 'px';
-            firework.style.width = '120px';
-            firework.style.height = '120px';
-            document.body.appendChild(firework);
+        // Add a cube
+        const geometry = new THREE.BoxGeometry();
+        const material = new THREE.MeshStandardMaterial({ color: 0xffb900 });
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
 
-            for (let i = 0; i < 24; i++) {
-                const dot = document.createElement('div');
-                dot.className = 'firework-dot';
-                dot.style.background = colors[Math.floor(Math.random()*colors.length)];
-                dot.style.left = '60px';
-                dot.style.top = '60px';
-                firework.appendChild(dot);
+        // Add light
+        const light = new THREE.PointLight(0xffffff, 1, 100);
+        light.position.set(5,5,5);
+        scene.add(light);
 
-                const angle = (i/24) * 2 * Math.PI;
-                const dist = 40 + Math.random()*30;
-                setTimeout(() => {
-                    dot.style.transition = 'all 0.7s cubic-bezier(.68,-0.55,.27,1.55)';
-                    dot.style.left = (60 + Math.cos(angle)*dist) + 'px';
-                    dot.style.top = (60 + Math.sin(angle)*dist) + 'px';
-                    dot.style.opacity = 0;
-                }, 10);
-            }
-            setTimeout(() => {
-                firework.remove();
-            }, 900);
+        camera.position.z = 3;
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+        function animate() {
+            requestAnimationFrame(animate);
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.012;
+            renderer.render(scene, camera);
         }
-        document.addEventListener('click', function(e) {
-            if (e.target === themeToggle || e.target === confettiCanvas) return;
-            fireworkAt(e.clientX, e.clientY);
-        });
+        animate();
 
-        const facts = [
-            "JavaScript werd in 10 dagen uitgevonden.",
-            "De naam JavaScript heeft niets met Java te maken.",
-            "Je kunt met JS zelfs robots aansturen!",
-            "JS kan in de browser én op de server draaien.",
-            "console.log() is je beste vriend bij debuggen.",
-            "Met CSS en JS kun je verbluffende animaties maken.",
-            "JS kent het getal NaN (Not a Number).",
-            "De eerste website ooit is nog steeds online.",
-            "JS heeft geen int/float, alleen Number.",
-            "Je kunt emoji's gebruiken in variabelen: let 🦄 = 42;"
-        ];
-        const randomFactLi = document.getElementById('randomFactLi');
-        const randomFactText = document.getElementById('randomFactText');
-        randomFactLi.addEventListener('click', function(e) {
-            e.stopPropagation();
-            randomFactText.textContent = facts[Math.floor(Math.random()*facts.length)];
-        });
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'c' && (e.ctrlKey || e.metaKey)) {
-                launchConfetti();
-            }
-        });
-
-        const headerH1 = document.querySelector('header h1');
-        const originalText = headerH1.textContent;
-        let typingIndex = 0;
-        function typeHeader() {
-            headerH1.textContent = originalText.slice(0, typingIndex) +
-                (typingIndex % 2 === 0 ? '|' : '');
-            typingIndex++;
-            if (typingIndex <= originalText.length) {
-                setTimeout(typeHeader, 120);
-            } else {
-                headerH1.textContent = originalText;
-            }
-        }
-        setTimeout(typeHeader, 800);
-        function updateGreeting() {
-            const h = new Date().getHours();
-            let greet = "Welkom op mijn high-tech website!";
-            if (h >= 6 && h < 12) greet = "Goedemorgen! Welkom op mijn high-tech website!";
-            else if (h >= 12 && h < 18) greet = "Goedemiddag! Welkom op mijn high-tech website!";
-            else if (h >= 18 && h < 24) greet = "Goedenavond! Welkom op mijn high-tech website!";
-            else greet = "Goedenacht! Welkom op mijn high-tech website!";
-            headerH1.textContent = greet;
-        }
-        setTimeout(updateGreeting, 3200);
-
-        const main = document.querySelector('main');
-        main.addEventListener('mouseenter', () => {
-            main.style.boxShadow = '0 0 0 4px #ffb900, 0 8px 32px rgba(0,0,0,0.1)';
-            main.style.transition = 'box-shadow 0.4s';
-        });
-        main.addEventListener('mouseleave', () => {
-            main.style.boxShadow = '0 8px 32px rgba(0,0,0,0.1)';
-        });
-
-        const konami = [38,38,40,40,37,39,37,39,66,65];
-        let konamiIndex = 0;
-        document.addEventListener('keydown', function(e) {
-            if (e.keyCode === konami[konamiIndex]) {
-                konamiIndex++;
-                if (konamiIndex === konami.length) {
-                    for(let i=0; i<3; i++) setTimeout(launchConfetti, i*400);
-                    konamiIndex = 0;
-                }
-            } else {
-                konamiIndex = 0;
-            }
-        });
-
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-            fireworkAt(e.clientX, e.clientY);
+        // Responsive 3D
+        window.addEventListener('resize', () => {
+            width = threeDiv.offsetWidth;
+            renderer.setSize(width, height);
+            camera.aspect = width/height;
+            camera.updateProjectionMatrix();
         });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.152.0/examples/js/controls/OrbitControls.js"></script>
-
-    <!-- Ingesloten 3D Game -->
-    <!DOCTYPE html>
-    <html lang="nl">
-    <head>
-        <meta charset="UTF-8">
-        <title>3D Mini-Spel</title>
-        <style>
-            body {
-                margin: 0; background: #f0f0f0;
-            }
-            #gameContainer {
-                width: 100%; height: 100vh; display: flex;
-                justify-content: center; align-items: center;
-            }
-            canvas {
-                display: block;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="gameContainer"></div>
-        <script src="https://cdn.jsdelivr.net/npm/three@0.152.0/build/three.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/three@0.152.0/examples/js/controls/OrbitControls.js"></script>
-        <script>
-            document.getElementById('gameContainer').innerHTML = '';
-            document.body.style.margin = '0';
-            document.body.style.background = '#f0f0f0';
-            document.body.style.overflow = 'hidden';
-            document.body.style.display = 'flex';
-            document.body.style.justifyContent = 'center';
-            document.body.style.alignItems = 'center';
-            document.body.style.height = '100vh';
-            document.body.style.width = '100vw';
-            document.body.style.fontFamily = 'Arial, sans-serif';
-            document.body.style.color = '#333';
-            document.body.style.textAlign = 'center';
-            document.body.style.background = 'linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%)';
-
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(
-                75,
-                document.getElementById('gameContainer').clientWidth /
-                document.getElementById('gameContainer').clientHeight,
-                0.1,
-                1000
-            );
-            const renderer = new THREE.WebGLRenderer();
-            renderer.setSize(
-                document.getElementById('gameContainer').clientWidth,
-                document.getElementById('gameContainer').clientHeight
-            );
-            document.getElementById('gameContainer').appendChild(renderer.domElement);
-
-            const geometry = new THREE.BoxGeometry();
-            const material = new THREE.MeshBasicMaterial({ color: 0xffb900, wireframe: false });
-            const cube = new THREE.Mesh(geometry, material);
-            scene.add(cube);
-
-            camera.position.z = 5;
-            let speed = 0.05;
-
-            function animate() {
-                requestAnimationFrame(animate);
-                renderer.render(scene, camera);
-            }
-            animate();
-
-            window.addEventListener('keydown', (e) => {
-                if (e.key === 'w') camera.position.z -= speed;
-                if (e.key === 's') camera.position.z += speed;
-                if (e.key === 'a') camera.position.x -= speed;
-                if (e.key === 'd') camera.position.x += speed;
-            });
-        </script>
-    </body>
-    </html>
 </body>
 </html>
